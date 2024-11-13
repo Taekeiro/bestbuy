@@ -1,18 +1,26 @@
+# File: main.py
 from products import Product
+from store import Store
 
 def main():
-    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-    mac = Product("MacBook Air M2", price=1450, quantity=100)
+    # Create a list of products
+    product_list = [
+        Product("MacBook Air M2", price=1450, quantity=100),
+        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        Product("Google Pixel 7", price=500, quantity=250),
+    ]
 
-    print(bose.buy(50))  # Expected output: 12500.0
-    print(mac.buy(100))  # Expected output: 145000.0
-    print(mac.is_active())  # Expected output: False, because quantity reached 0
+    # Initialize the store with the product list
+    store = Store(product_list)
 
-    print(bose.show())  # Expected output: "Bose QuietComfort Earbuds, Price: $250, Quantity: 450"
-    print(mac.show())   # Expected output: "MacBook Air M2, Price: $1450, Quantity: 0"
+    # Fetch all active products in the store
+    products = store.get_all_products()
 
-    bose.set_quantity(1000)
-    print(bose.show())  # Expected output: "Bose QuietComfort Earbuds, Price: $250, Quantity: 1000"
+    # Display the total quantity of all products in the store
+    print(store.get_total_quantity())  # Expected output: 850
+
+    # Place an order for multiple products and display the total cost
+    print(store.order([(products[0], 1), (products[1], 2)]))  # Expected output: 1950.0
 
 if __name__ == "__main__":
     main()
