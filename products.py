@@ -1,46 +1,48 @@
 # File: products.py
 
 class Product:
-    def __init__(self, name: str, price: float, quantity: int):
-        if not name or price < 0 or quantity < 0:
-            raise ValueError(
-                "Invalid product details: Name cannot be empty, and price and quantity must be non-negative.")
+    """Represents a product with a name, price, quantity, and active status."""
 
+    def __init__(self, name: str, price: float, quantity: int):
+        """Initialize product with name, price, quantity, and active status."""
+        if not name or price < 0 or quantity < 0:
+            raise ValueError("Invalid values for name, price, or quantity")
         self.name = name
         self.price = price
         self.quantity = quantity
-        self.active = True if quantity > 0 else False
+        self.active = True
 
-    def get_quantity(self) -> int:
+    def get_quantity(self) -> float:
+        """Return the current quantity of the product."""
         return self.quantity
 
     def set_quantity(self, quantity: int):
-        if quantity < 0:
-            raise ValueError("Quantity cannot be negative.")
-
+        """Set the quantity of the product, deactivating if quantity reaches zero."""
         self.quantity = quantity
-        if self.quantity == 0:
+        if self.quantity <= 0:
             self.deactivate()
 
     def is_active(self) -> bool:
+        """Return True if the product is active, otherwise False."""
         return self.active
 
     def activate(self):
+        """Activate the product."""
         self.active = True
 
     def deactivate(self):
+        """Deactivate the product."""
         self.active = False
 
     def show(self) -> str:
-        return f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}"
+        """Return a string representation of the product."""
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
     def buy(self, quantity: int) -> float:
-        if not self.active:
-            raise Exception(f"{self.name} is not available for purchase.")
-
-        if quantity > self.quantity:
-            raise ValueError("Not enough stock available.")
-
-        total_price = quantity * self.price
-        self.set_quantity(self.quantity - quantity)
-        return total_price
+        """Buy a specified quantity of the product and return the total cost."""
+        if not self.active or quantity > self.quantity or quantity <= 0:
+            raise ValueError("Invalid purchase quantity")
+        self.quantity -= quantity
+        if self.quantity == 0:
+            self.deactivate()
+        return self.price * quantity
