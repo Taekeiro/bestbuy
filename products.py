@@ -60,6 +60,7 @@ class Product:
             return self.promotion.apply_promotion(self, quantity)
         return self.price * quantity
 
+
 class NonStockedProduct(Product):
     """Represents a product that does not require stock tracking."""
 

@@ -3,6 +3,7 @@
 from typing import List, Tuple
 from products import Product
 
+
 class Store:
     """Represents a store containing a collection of products."""
 

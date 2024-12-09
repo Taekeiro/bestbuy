@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Promotion(ABC):
     """Abstract base class for promotions."""
 
